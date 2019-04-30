@@ -9,6 +9,7 @@
   "author": "Sonu Kumar Singh",
   "license": "ISC",
   "dependencies": {
+    "boom": "^7.3.0",
     "hapi": "^11.0.3"
   },
   "devDependencies": {
