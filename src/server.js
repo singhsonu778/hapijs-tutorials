@@ -39,7 +39,7 @@ server.register(inert, () => {
 
     server.route({
         method: 'GET',
-        path: '/{filename}',
+        path: '/{filename*}',
         handler: {
             directory: {
                 path: 'images'
