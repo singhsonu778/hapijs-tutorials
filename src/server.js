@@ -19,9 +19,9 @@ server.route({
 
 server.route({
     method: 'GET',
-    path: '/user/{name}',
+    path: '/user/{name?}',
     handler: (request, reply) => {
-        const user = request.params.name;
+        const user = request.params.name || 'guest';
         reply(`hello ${user}`);
     }
 });
