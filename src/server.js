@@ -14,7 +14,11 @@ server.route({
     method: 'GET',
     path: '/',
     handler: (request, reply) => {
-        reply('hello hapi');
+        reply('hello hapi')
+            .code(204)
+            .type('text/plain')
+            .header('header-key', 'header-value')
+            .state('cookie-key', 'cookie-value');
     }
 });
 
