@@ -1,0 +1,14 @@
+{
+  "name": "hapijs-tutorials",
+  "version": "1.0.0",
+  "description": "a simple hapijs tutorials",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js"
+  },
+  "author": "Sonu Kumar Singh",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^11.0.3"
+  }
+}
