@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "boom": "^7.3.0",
-    "hapi": "^11.0.3"
+    "hapi": "^11.0.3",
+    "inert": "^4.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.11"
