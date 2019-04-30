@@ -17,4 +17,13 @@ server.route({
     }
 });
 
+server.route({
+    method: 'GET',
+    path: '/user/{name}',
+    handler: (request, reply) => {
+        const user = request.params.name;
+        reply(`hello ${user}`);
+    }
+});
+
 server.start(() => console.log('Server running on %s', server.info.uri));

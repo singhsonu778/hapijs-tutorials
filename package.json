@@ -4,11 +4,14 @@
   "description": "a simple hapijs tutorials",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "nodemon ./src/server.js"
   },
   "author": "Sonu Kumar Singh",
   "license": "ISC",
   "dependencies": {
     "hapi": "^11.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.11"
   }
 }
