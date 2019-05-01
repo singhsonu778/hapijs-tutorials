@@ -1,44 +1,45 @@
 'use strict';
 
-const Hapi = require('hapi');
-const boom = require('boom');
-const inert = require('inert');
-const vision = require('vision');
+const Hapi = require('@hapi/hapi');
+const boom = require('@hapi/boom');
+const inert = require('@hapi/inert');
+const vision = require('@hapi/vision');
 const handlebars = require('handlebars');
 
-const server = new Hapi.Server();
+const init = async () => {
 
-server.connection({
-    host: 'localhost',
-    port: 8000
-});
+    const server = Hapi.server({
+        host: 'localhost',
+        port: 8000
+    });
 
-server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, reply) => {
-        reply('hello hapi')
+    server.route({
+        method: 'GET',
+        path: '/',
+        handler: (request, h) => {
+            return h.response('Hello, Hapi')
             //.code(204)
-            .type('text/plain')
-            .header('header-key', 'header-value')
-            .state('cookie-key', 'cookie-value');
-    }
-});
-
-server.route({
-    method: 'GET',
-    path: '/user/{name?}',
-    handler: (request, reply) => {
-        const user = request.params.name;
-        if(user) {
-            reply(`Hello, ${user}`);
-        } else {
-            reply(boom.badRequest('user name is required'))
+                .type('text/plain')
+                .header('header-key', 'header-value')
+                .state('cookie-key', 'cookie-value');
         }
-    }
-});
+    });
 
-server.register(inert, () => {
+    server.route({
+        method: 'GET',
+        path: '/user/{name?}',
+        handler: (request, h) => {
+            const user = request.params.name;
+            if(user) {
+                return `Hello, ${user}`;
+            } else {
+                return boom.badRequest('user name is required');
+            }
+        }
+    });
+
+    await server.register(inert);
+
     server.route({
         method: 'GET',
         path: '/{filename*}',
@@ -48,9 +49,9 @@ server.register(inert, () => {
             }
         }
     });
-});
 
-server.register(vision, () => {
+    await server.register(vision);
+
     server.views({
         engines: {
             hbs: handlebars
@@ -63,10 +64,13 @@ server.register(vision, () => {
     server.route({
         method: 'GET',
         path: '/view/{name?}',
-        handler: (request, reply) => {
-            reply.view('root', {name: request.params.name || 'guest'});
+        handler: (request, h) => {
+            return h.view('root', {name: request.params.name || 'guest'});
         }
     });
-});
 
-server.start(() => console.log('Server running on %s', server.info.uri));
+    await server.start();
+    console.log('Server running on %s', server.info.uri);
+};
+
+init();
