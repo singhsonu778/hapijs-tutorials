@@ -3,6 +3,8 @@
 const Hapi = require('hapi');
 const boom = require('boom');
 const inert = require('inert');
+const vision = require('vision');
+const handlebars = require('handlebars');
 
 const server = new Hapi.Server();
 
@@ -17,7 +19,7 @@ server.register(inert, () => {
         path: '/',
         handler: (request, reply) => {
             reply('hello hapi')
-                .code(204)
+            //.code(204)
                 .type('text/plain')
                 .header('header-key', 'header-value')
                 .state('cookie-key', 'cookie-value');
@@ -46,7 +48,25 @@ server.register(inert, () => {
             }
         }
     });
+});
+
+server.register(vision, () => {
+    server.views({
+        engines: {
+            hbs: handlebars
+        },
+        //relativeTo: __dirname,
+        layout: true,
+        path: 'views'
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/view/{name?}',
+        handler: (request, reply) => {
+            reply.view('root', {name: request.params.name || 'guest'});
+        }
+    });
 
     server.start(() => console.log('Server running on %s', server.info.uri));
 });
-
