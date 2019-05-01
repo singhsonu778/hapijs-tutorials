@@ -1,2 +1,2 @@
 # hapijs-tutorials
-a simple hapijs tutorials
+A simple hapijs tutorials
