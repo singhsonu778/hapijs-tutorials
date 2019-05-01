@@ -13,32 +13,32 @@ server.connection({
     port: 8000
 });
 
-server.register(inert, () => {
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, reply) => {
-            reply('hello hapi')
+server.route({
+    method: 'GET',
+    path: '/',
+    handler: (request, reply) => {
+        reply('hello hapi')
             //.code(204)
-                .type('text/plain')
-                .header('header-key', 'header-value')
-                .state('cookie-key', 'cookie-value');
-        }
-    });
+            .type('text/plain')
+            .header('header-key', 'header-value')
+            .state('cookie-key', 'cookie-value');
+    }
+});
 
-    server.route({
-        method: 'GET',
-        path: '/user/{name?}',
-        handler: (request, reply) => {
-            const user = request.params.name;
-            if(user) {
-                reply(`hello ${user}`);
-            } else {
-                reply(boom.badRequest('user name is required'))
-            }
+server.route({
+    method: 'GET',
+    path: '/user/{name?}',
+    handler: (request, reply) => {
+        const user = request.params.name;
+        if(user) {
+            reply(`Hello, ${user}`);
+        } else {
+            reply(boom.badRequest('user name is required'))
         }
-    });
+    }
+});
 
+server.register(inert, () => {
     server.route({
         method: 'GET',
         path: '/{filename*}',
@@ -67,6 +67,6 @@ server.register(vision, () => {
             reply.view('root', {name: request.params.name || 'guest'});
         }
     });
-
-    server.start(() => console.log('Server running on %s', server.info.uri));
 });
+
+server.start(() => console.log('Server running on %s', server.info.uri));
